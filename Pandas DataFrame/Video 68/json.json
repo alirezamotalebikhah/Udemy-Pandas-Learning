@@ -1,0 +1,23 @@
+{
+  "user": {
+    "id": 101,
+    "name": "Alireza",
+    "email": "alireza@example.com",
+    "location": "Tehran, Iran",
+    "preferences": {
+      "language": "Persian",
+      "theme": "dark",
+      "notifications": true
+    },
+    "recent_activity": [
+      {
+        "type": "login",
+        "timestamp": "2025-10-15T08:45:00Z"
+      },
+      {
+        "type": "update_profile",
+        "timestamp": "2025-10-14T17:30:00Z"
+      }
+    ]
+  }
+}
