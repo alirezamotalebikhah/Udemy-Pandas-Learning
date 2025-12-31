@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: udemy-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: udemy_master_of_pandas
+      POSTGRES_USER: udemy
+      POSTGRES_PASSWORD: udemy123
+
+    ports:
+      - "5434:5432"   
+
+    networks:
+      - udemy_net
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+networks:
+  udemy_net:
+    driver: bridge
+
+volumes:
+  postgres_data:
