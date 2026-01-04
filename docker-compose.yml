@@ -18,11 +18,11 @@ services:
       - udemy_net
 
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_udemy:/var/lib/postgresql/data
 
 networks:
   udemy_net:
     driver: bridge
 
 volumes:
-  postgres_data:
+  postgres_udemy:
