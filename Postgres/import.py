@@ -7,8 +7,8 @@ engine = create_engine(db_url)
 csv_file = "employees.csv"
 df = pd.read_csv(csv_file)
 
-schema_name = 'master'
-table_name = 'employees'
+schema_name = "master"
+table_name = "employees"
 
 with engine.connect() as conn:
     conn.execute(text(f'DROP TABLE IF EXISTS "{schema_name}"."{table_name}"'))
@@ -19,17 +19,19 @@ with engine.connect() as conn:
     conn.execute(text(f'CREATE SCHEMA "{schema_name}"'))
     conn.commit()
 
+
 def map_dtype_to_postgres(dtype):
     if pd.api.types.is_integer_dtype(dtype):
-        return 'INTEGER'
+        return "INTEGER"
     elif pd.api.types.is_float_dtype(dtype):
-        return 'NUMERIC'
+        return "NUMERIC"
     elif pd.api.types.is_bool_dtype(dtype):
-        return 'BOOLEAN'
+        return "BOOLEAN"
     elif pd.api.types.is_datetime64_any_dtype(dtype):
-        return 'TIMESTAMP'
+        return "TIMESTAMP"
     else:
-        return 'TEXT'
+        return "TEXT"
+
 
 columns_with_types = []
 for col, dtype in zip(df.columns, df.dtypes):
@@ -46,9 +48,16 @@ with engine.connect() as conn:
 
 for idx, row in df.iterrows():
     cols = ", ".join([f'"{col}"' for col in df.columns])
-    vals = ", ".join([f"'{str(val).replace(chr(39), chr(39)+chr(39))}'" if pd.notna(val) else 'NULL' for val in row])
+    vals = ", ".join(
+        [
+            f"'{str(val).replace(chr(39), chr(39) + chr(39))}'"
+            if pd.notna(val)
+            else "NULL"
+            for val in row
+        ]
+    )
     insert_sql = f'INSERT INTO "{schema_name}"."{table_name}" ({cols}) VALUES ({vals})'
-    
+
     with engine.connect() as conn:
         conn.execute(text(insert_sql))
         conn.commit()
@@ -60,3 +69,4 @@ with engine.connect() as conn:
     print("\n5 سطر اول:")
     for row in result:
         print(row)
+
